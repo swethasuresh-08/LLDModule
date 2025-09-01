@@ -8,20 +8,20 @@ public class Consumer implements Runnable {
     private int maxSize;
 
 
-    Consumer( Queue<Object> store,String name,int maxSize)
-    {
-        this.store=store;
-        this.name=name;
-        this.maxSize=maxSize;
+    Consumer(Queue<Object> store, String name, int maxSize) {
+        this.store = store;
+        this.name = name;
+        this.maxSize = maxSize;
     }
+
     @Override
     public void run() {
-        while(true)
-        {
-            if(store.size()>0)
-            {
-                System.out.print("Consumer "+this.name+" is Consuming");
-                store.remove();
+        while (true) {
+            synchronized (store) {
+                if (store.size() > 0) {
+                    System.out.print("Consumer " + this.name + " is Consuming");
+                    store.remove();
+                }
             }
         }
     }
